@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cat <<\EOF
+Hooks: Pushing after commit
+EOF
+
+git push
+
+exit 0
