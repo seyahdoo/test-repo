@@ -4,10 +4,18 @@ cat <<\EOF
 Hooks: Pulling before commit
 EOF
 
-if git pull; then
-    exit 0
-else
-    exit 1
+output=$(git pull --recurse-submodules=yes)
+
+if (test $? -ne 0)
+then
+	echo "Will not commit because an error occured on pull."
+fi
+
+if [[ ${output} != *"Already up to date."* ]];then
+    # output does not contain Already up to date.
+	echo "Will not commit because there is a commit that we didnt pull before."
+	exit 1
 fi
 
 exit 0
+
